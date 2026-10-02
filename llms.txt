@@ -1,0 +1,29 @@
+# brian mulder
+
+> software engineer & consultant. co-founder of tessur. sydney, australia.
+
+i design and build software for clients. nuts about ai and agents.
+previously aws ec2, cba, and optus. available for projects, contracts, and
+ai workshops.
+
+at tessur, we're building an on-device assistant to help people and their
+agents check actions against their context and what matters to them.
+i also run ai adoption workshops through secure measure for engineering
+teams as they work through ai-assisted development.
+
+contact: hello@mail.brianmulder.com
+updated: 2 october 2026. confirm availability and scope directly.
+
+## links
+
+- [cv in plain text](https://www.brianmulder.com/cv.txt): career history and skills.
+- [website](https://www.brianmulder.com/)
+- [tessur](https://tessur.com/)
+- [secure measure](https://www.securemeasure.com.au/)
+- [linkedin](https://www.linkedin.com/in/brianmulder-tech/)
+- [github](https://github.com/brianmulder)
+
+## printable cv
+
+- [one-page pdf](https://www.brianmulder.com/Brian-Mulder-CV.pdf)
+- [detailed pdf](https://www.brianmulder.com/Brian-Mulder-CV-Detailed.pdf)
