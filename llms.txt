@@ -3,7 +3,7 @@
 > software engineer & consultant. co-founder of tessur. sydney, australia.
 
 i design and build software for clients. nuts about ai and agents.
-previously aws ec2, cba, and optus. available for projects, contracts, and
+previously Amazon Web Services, CBA, and Optus. available for projects, contracts, and
 ai workshops.
 
 at tessur, we're building an on-device assistant to help people and their
