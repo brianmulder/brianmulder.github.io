@@ -62,11 +62,26 @@ local pointer should name this repository and cloud environment.
 Static maintenance is self-contained; asset regeneration is not.
 `build_text.py` requires ReportLab and the absent sibling `../cv/build_cv.py`
 public-mode source. The PDF regeneration source is not in this repository.
-`build_social_card.py` requires Pillow and `C:/Windows/Fonts/arial*.ttf`.
-Do not run these generators in the cloud environment or replace the committed
-CVs, PDFs or social card with substitutes.
+`build_social_card.py` uses bundled Liberation Sans under SIL OFL 1.1
+(see `assets/fonts/LICENSE.txt` and provenance in `assets/fonts/README.md`).
+Its supported cloud build uses Python 3.12.14 and `Pillow==12.3.0`, pinned
+in `requirements-social-card.txt`; these are not historical Windows versions.
+The cloud runtime already supplies that Pillow version.
+
+Generate a review copy without replacing the published card:
+
+```sh
+python3 build_social_card.py --output /tmp/social-card-review.png
+python3 test_social_card.py
+```
+
+`--font-dir` explicitly selects a directory containing LiberationSans-Regular.ttf
+and LiberationSans-Bold.ttf; no platform font fallback is used. Review the
+new image visually before intentionally replacing `social-card.png`.
+Do not run the CV/text generator until its absent public source is supplied;
+keep committed CVs and PDFs unchanged.
 
 The minimal later portability fix is to review and extract only public CV
-source into this repository, pin generator dependencies, and supply an
-explicit licensed portable font path. Keep private CV data outside the repo.
+source into this repository and pin its generator dependencies.
+The social-card font dependency is now bundled with its license. Keep private CV data outside the repo.
 That is separate work; the existing committed assets remain usable as-is.

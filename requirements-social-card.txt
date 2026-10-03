@@ -1,0 +1,2 @@
+# Supported cloud generation environment; not historical Windows versions.
+Pillow==12.3.0
