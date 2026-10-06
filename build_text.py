@@ -1,146 +1,157 @@
-"""Build public text from the same professional content as the public PDFs."""
+"""Build printable public CVs from cv.txt; maintain llm.txt compatibility copy.
 
-from html import unescape
+Only committed public sources are read. No sibling/private CV is imported.
+"""
+from html import escape
 from pathlib import Path
 import re
-import runpy
-import sys
-import textwrap
-import unicodedata
+
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate
 
 ROOT = Path(__file__).resolve().parent
-sys.argv = [str(ROOT.parent / 'cv' / 'build_cv.py'), '--public']
-cv = runpy.run_path(sys.argv[0])
+INK = colors.HexColor('#24292c')
+for name, filename in [('CVSans', 'LiberationSans-Regular.ttf'),
+                       ('CVSans-Bold', 'LiberationSans-Bold.ttf')]:
+    pdfmetrics.registerFont(TTFont(name, str(ROOT / 'assets' / 'fonts' / filename)))
+pdfmetrics.registerFontFamily('CVSans', normal='CVSans', bold='CVSans-Bold',
+                              italic='CVSans', boldItalic='CVSans-Bold')
+STYLES = {
+    'name': ParagraphStyle('name', fontName='CVSans-Bold', fontSize=25,
+                           leading=29, textColor=INK, spaceAfter=2),
+    'subtitle': ParagraphStyle('subtitle', fontName='CVSans', fontSize=12,
+                               leading=15, textColor=INK, spaceAfter=5),
+    'contact': ParagraphStyle('contact', fontName='CVSans', fontSize=9.5,
+                              leading=12, textColor=INK, spaceAfter=3),
+    'section': ParagraphStyle('section', fontName='CVSans-Bold', fontSize=10.5,
+                              leading=13, textColor=INK, spaceBefore=7, spaceAfter=5,
+                              keepWithNext=True),
+    'body': ParagraphStyle('body', fontName='CVSans', fontSize=10.5,
+                           leading=13, textColor=INK, spaceAfter=3.8),
+    'role': ParagraphStyle('role', fontName='CVSans-Bold', fontSize=10.5,
+                           leading=13, textColor=INK, spaceBefore=7, spaceAfter=4,
+                           keepWithNext=True),
+}
 
 
-def ascii_text(value):
-    value = re.sub(r'<[^>]+>', '', value)
-    value = unescape(value)
-    for old, new in {'\u2019': "'", '\u2018': "'", '\u201c': '"',
-                     '\u201d': '"', '\u2013': '-', '\u2014': ' - ',
-                     '\u2022': '-', '\u00a0': ' '}.items():
-        value = value.replace(old, new)
-    return unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode()
+def markup(text):
+    """Escape source prose and make explicit public URLs clickable."""
+    chunks = re.split(r'(https://[^\s]+)', text)
+    return ''.join(f'<link href="{escape(s, quote=True)}" color="#24292c">'
+                   f'{escape(s)}</link>' if s.startswith('https://') else escape(s)
+                   for s in chunks)
 
 
-def paragraphs(items):
-    for item in items:
-        if hasattr(item, 'text'):
-            yield item
-        elif hasattr(item, '_content'):
-            yield from paragraphs(item._content)
+def para(text, kind='body'):
+    if text.startswith('- '):
+        text = '\u2022 ' + text[2:]
+        if ' | ' in text and ' - ' in text:
+            label, rest = text.split(' - ', 1)
+            return Paragraph('<b>' + markup(label) + '</b> - ' + markup(rest), STYLES[kind])
+    return Paragraph(markup(text), STYLES[kind])
 
 
-groups = {}
-current = None
-for para in paragraphs(cv['opening_page']()):
-    if para.style.name == 'section':
-        current = ascii_text(para.text)
-        groups[current] = []
-    elif current:
-        groups[current].append(ascii_text(para.text))
-
-employment = []
-cv['employment_page'](employment)
-roles = list(paragraphs(employment))[1:]
-lines = [
-    'Brian Mulder'.ljust(72 - len('Curriculum Vitae')) + 'Curriculum Vitae',
-    'Independent engineering & consulting'.ljust(72 - len('October 2026')) + 'October 2026',
-    '',
-    '                              BRIAN MULDER',
-    'Software Engineer'.center(72).rstrip(),
-    '',
-    '   Sydney, Australia | Australian permanent resident',
-    '   https://www.brianmulder.com/',
-    '   https://www.linkedin.com/in/brianmulder-tech/',
-    '',
-    'Contents',
-    '',
-    '   1. Profile',
-    '   2. Selected projects and capabilities',
-    '   3. Technical skill set',
-    '   4. Employment and project detail',
-    '   5. Education',
-    '   6. Contact and links',
-]
+def read_sections():
+    text = (ROOT / 'cv.txt').read_text(encoding='ascii')
+    if max(map(len, text.splitlines())) > 72:
+        raise ValueError('cv.txt exceeds 72 columns')
+    sections = {}
+    current = None
+    for block in re.split(r'\n\s*\n', text.strip()):
+        block = ' '.join(line.strip() for line in block.splitlines())
+        if re.match(r'^[1-6]\. ', block):
+            current = block.split('.')[0]
+            sections[current] = []
+        elif current:
+            sections[current].append(block)
+    if set(sections) != set('123456'):
+        raise ValueError('Expected six numbered public CV sections')
+    return sections
 
 
-def heading(text):
-    lines.extend(['', '', text, ''])
+def opening(sections):
+    story = [para('BRIAN MULDER', 'name'), para('Software Engineer', 'subtitle')]
+    story.append(Paragraph('<link href="mailto:hello@mail.brianmulder.com">'
+                           'hello@mail.brianmulder.com</link>   |   '
+                           '<link href="https://www.brianmulder.com/">brianmulder.com</link>'
+                           '   |   Sydney', STYLES['contact']))
+    story.append(Paragraph('<link href="https://www.linkedin.com/in/brianmulder-tech/">'
+                           'linkedin.com/in/brianmulder-tech</link>   |   '
+                           '<link href="https://github.com/brianmulder">github.com/brianmulder</link>'
+                           '   |   Australian permanent resident', STYLES['contact']))
+    for title, key in [('PROFILE', '1'), ('SELECTED PROJECTS & CAPABILITIES', '2'),
+                       ('TECHNICAL SKILL SET', '3')]:
+        story.append(para(title, 'section'))
+        story.extend(para(text) for text in sections[key])
+    story.append(para('CAREER AT A GLANCE', 'section'))
+    roles = [re.sub(r'^4\.\d+\. ', '', text) for text in sections['4']
+             if re.match(r'^4\.\d+\. ', text)]
+    for text in roles:
+        if text.startswith('Optus -'):
+            periods = next(item for item in sections['4']
+                           if item.startswith('- Technical Product Management:'))
+            match = re.fullmatch(
+                r'- Technical Product Management: (.+)\. Engineering Capability: (.+)\.',
+                periods)
+            if not match:
+                raise ValueError('Expected two dated Optus role periods in cv.txt')
+            for title, dates in zip(('Technical Product Management', 'Engineering Capability'),
+                                    match.groups()):
+                story.append(para(f'Optus - Associate Director, {title} | {dates}', 'contact'))
+        elif text.startswith('Commonwealth Bank -'):
+            story.append(para('CBA - Scalable Systems Engineer; Engineering Lead; Tower Lead | Sep 2016 - Jan 2023', 'contact'))
+        else:
+            story.append(para(text, 'contact'))
+    story.append(para('EDUCATION', 'section'))
+    story.extend(para(text, 'contact') for text in sections['5'])
+    return story
 
 
-def body(text):
-    lines.extend(textwrap.wrap(text, width=72, initial_indent='   ',
-                              subsequent_indent='     ' if text.startswith('- ') else '   ',
-                              break_long_words=False, break_on_hyphens=False))
-    lines.append('')
+def employment(sections):
+    story = [para('BRIAN MULDER | EMPLOYMENT & PROJECT DETAIL', 'section')]
+    for text in sections['4']:
+        role = re.match(r'^4\.\d+\. ', text)
+        story.append(para(text[role.end():] if role else text, 'role' if role else 'body'))
+    return story
 
 
-for title, key in [('1. Profile', 'PROFILE'),
-                   ('2. Selected projects and capabilities', 'SELECTED PROJECTS & CAPABILITIES'),
-                   ('3. Technical skill set', 'TECHNICAL SKILL SET')]:
-    heading(title)
-    for text in groups[key]:
-        body(text)
+def footer(canvas, doc):
+    canvas.setTitle('Brian Mulder - Curriculum Vitae')
+    canvas.setAuthor('Brian Mulder')
+    canvas.setFont('CVSans', 9)
+    canvas.setFillColor(colors.HexColor('#626a6d'))
+    canvas.drawRightString(A4[0] - 42, 24, str(doc.page))
 
-heading('4. Employment and project detail')
-role_number = 0
-for para in roles:
-    if para.style.name == 'role':
-        role_number += 1
-        lines.append('')
-        body(f'4.{role_number}. ' + ascii_text(para.text))
-    else:
-        body(ascii_text(para.text))
 
-heading('5. Education')
-for text in groups['EDUCATION']:
-    body(text)
-heading('6. Contact and links')
-for text in ['Website: https://www.brianmulder.com/',
-             'Email: hello@mail.brianmulder.com',
-             'LinkedIn: https://www.linkedin.com/in/brianmulder-tech/',
-             'GitHub: https://github.com/brianmulder',
-             'Tessur: https://tessur.com/',
-             'Secure Measure: https://www.securemeasure.com.au/']:
-    body(text)
+def public_canvas(*args, **kwargs):
+    # Avoid adding an unused, unembedded Helvetica default font resource.
+    kwargs['initialFontName'] = 'CVSans'
+    return Canvas(*args, **kwargs)
 
-output = '\n'.join(lines).rstrip() + '\n'
-assert output.isascii()
-assert max(map(len, output.splitlines())) <= 72
-(ROOT / 'cv.txt').write_text(output, encoding='ascii')
 
-profile = '''# brian mulder
+def build():
+    sections = read_sections()
+    for name, detailed in [('Brian-Mulder-CV.pdf', False),
+                           ('Brian-Mulder-CV-Detailed.pdf', True)]:
+        story = opening(sections)
+        if detailed:
+            story += [PageBreak()] + employment(sections)
+        doc = SimpleDocTemplate(str(ROOT / name), pagesize=A4, leftMargin=42,
+                                rightMargin=42, topMargin=34, bottomMargin=42,
+                                pageCompression=1, invariant=1)
+        doc.build(story, onFirstPage=footer, onLaterPages=footer,
+                  canvasmaker=public_canvas)
+        if doc.page != (2 if detailed else 1):
+            raise ValueError(f'{name}: unexpected pagination ({doc.page})')
+    profile = (ROOT / 'llms.txt').read_text(encoding='ascii')
+    (ROOT / 'llm.txt').write_text(profile, encoding='ascii')
+    print('Built both public PDFs from cv.txt; copied llms.txt to llm.txt.')
 
-> software engineer & consultant. co-founder of tessur. sydney, australia.
 
-i design and build software for clients. nuts about ai and agents.
-previously Amazon Web Services, CBA, and Optus. available for projects, contracts, and
-ai workshops.
-
-at tessur, we're building an on-device assistant to help people and their
-agents check actions against their context and what matters to them.
-i also run ai adoption workshops through secure measure for engineering
-teams as they work through ai-assisted development.
-
-contact: hello@mail.brianmulder.com
-updated: 2 october 2026. confirm availability and scope directly.
-
-## links
-
-- [cv in plain text](https://www.brianmulder.com/cv.txt): career history and skills.
-- [website](https://www.brianmulder.com/)
-- [tessur](https://tessur.com/)
-- [secure measure](https://www.securemeasure.com.au/)
-- [linkedin](https://www.linkedin.com/in/brianmulder-tech/)
-- [github](https://github.com/brianmulder)
-
-## printable cv
-
-- [one-page pdf](https://www.brianmulder.com/Brian-Mulder-CV.pdf)
-- [detailed pdf](https://www.brianmulder.com/Brian-Mulder-CV-Detailed.pdf)
-'''
-assert profile.isascii()
-for name in ['llms.txt', 'llm.txt']:
-    (ROOT / name).write_text(profile, encoding='ascii')
-print('Built cv.txt, llms.txt and llm.txt (identical alias).')
+if __name__ == '__main__':
+    build()

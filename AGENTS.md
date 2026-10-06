@@ -10,8 +10,9 @@ GitHub Pages serves the repository root; no package installation or build is nee
   Do not assume shell Git has write credentials. Never force-push main.
 - Merge only within the authorized task scope and any required repository review.
   Verify the resulting Pages deployment and public URLs before claiming success.
-- Do not run the CV/text generator: its source is absent here. Do not import
-  private CV material or secrets. Social-card review generation is supported
-  with bundled licensed fonts; use --output to avoid replacing published assets.
+- The CV generator now reads committed public `cv.txt` and `llms.txt` only;
+  see README.md for its pinned dependency and PDF review requirements. Do not
+  import private CV material or secrets. Social-card review generation uses
+  bundled licensed fonts; use --output to avoid replacing published assets.
 - Local checkouts are legacy/reference copies. Do not delete or overwrite them;
   direct future development to the cloud environment and canonical repository.

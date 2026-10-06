@@ -2,7 +2,8 @@
 
 Static personal website at https://www.brianmulder.com/.
 GitHub Pages serves the root of the `main` branch. Brian approved publication
-on 2 October 2026.
+on 2 October 2026. The 6 October 2026 résumé refresh is prepared for review;
+that earlier approval does not authorize publishing this refresh.
 
 ## Public text
 
@@ -11,10 +12,13 @@ on 2 October 2026.
 - `llm.txt`: identical compatibility copy for the explicitly requested URL.
 - PDFs remain optional printable formats.
 
-Generate with `python build_text.py` in a runtime with ReportLab.
-The CV draws from `../cv/build_cv.py` in public mode, so the text and PDF
-versions use the same career content. The agent profile is maintained in
-`build_text.py`. Run that script after editing either source.
+The public sources are `cv.txt` (career content) and `llms.txt` (agent profile).
+Edit those files, then run `python3 build_text.py` to regenerate both PDFs
+and copy `llms.txt` to its `llm.txt` compatibility alias. The generator reads
+only committed public material; it has no private sibling-source dependency.
+Install its pinned dependency with `python3 -m pip install -r requirements-cv.txt`.
+Render and inspect both PDFs after content changes; their intended lengths are
+one page and two pages. Run `python3 validate_site.py` and `git diff --check`.
 
 The agent profile follows the proposal at https://llmstxt.org/.
 No private contact details or regular workplace location should appear.
@@ -60,8 +64,12 @@ local pointer should name this repository and cloud environment.
 ## Optional asset regeneration dependencies
 
 Static maintenance is self-contained; asset regeneration is not.
-`build_text.py` requires ReportLab and the absent sibling `../cv/build_cv.py`
-public-mode source. The PDF regeneration source is not in this repository.
+`build_text.py` uses `ReportLab==4.4.9`, pinned in `requirements-cv.txt`.
+Its public source is `cv.txt`; the generator also maintains the `llm.txt` alias
+from `llms.txt`. PDF generation embeds bundled Liberation Sans regular and bold fonts to
+match the website's Arial/Helvetica body and name typography. It keeps the
+A4 layout and checks the one-page/two-page pagination. Font provenance and
+SIL OFL license are in `assets/fonts/README.md` and `LICENSE.txt`.
 `build_social_card.py` uses bundled Liberation Sans under SIL OFL 1.1
 (see `assets/fonts/LICENSE.txt` and provenance in `assets/fonts/README.md`).
 Its supported cloud build uses Python 3.12.14 and `Pillow==12.3.0`, pinned
@@ -78,10 +86,5 @@ python3 test_social_card.py
 `--font-dir` explicitly selects a directory containing LiberationSans-Regular.ttf
 and LiberationSans-Bold.ttf; no platform font fallback is used. Review the
 new image visually before intentionally replacing `social-card.png`.
-Do not run the CV/text generator until its absent public source is supplied;
-keep committed CVs and PDFs unchanged.
-
-The minimal later portability fix is to review and extract only public CV
-source into this repository and pin its generator dependencies.
-The social-card font dependency is now bundled with its license. Keep private CV data outside the repo.
-That is separate work; the existing committed assets remain usable as-is.
+Keep private CV data outside the repository. The public CV build is now
+self-contained; the social-card font dependency is bundled with its license.
