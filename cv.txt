@@ -2,7 +2,7 @@ Brian Mulder                                            Curriculum Vitae
 Independent engineering & consulting                        October 2026
 
                               BRIAN MULDER
-                           Software Engineer
+                      Software & Systems Engineer
 
    Sydney, Australia | Australian permanent resident
    https://www.brianmulder.com/
@@ -12,173 +12,178 @@ Contents
 
    1. Profile
    2. Selected projects and capabilities
-   3. Technical skill set
+   3. Technical skills
    4. Employment and project detail
    5. Education
    6. Contact and links
 
-
 1. Profile
 
-   Over 20 years in software development, including engineering and
-   leadership at Amazon Web Services, CBA, and Optus. Helps teams solve
-   difficult software and platform problems, improve delivery, and put
-   AI-assisted engineering into practical use. Available for projects,
-   contracts and consulting, and open to the right permanent role with
-   people I can learn from.
+   I build software and untangle systems.
 
+   My work spans software engineering and leadership at Amazon Web
+   Services, Commonwealth Bank and Optus. I help teams solve difficult
+   software and platform problems, improve delivery and put AI-assisted
+   engineering into practical use.
+
+   I am available for projects, contracts and consulting. I am also open
+   to the right permanent role with people I can learn from.
 
 
 2. Selected projects and capabilities
 
-   - AI adoption workshop | April 2026 - Designed, ran and facilitated a
-     four-hour AI-assisted development workshop for Devicie engineers,
-     under contract through Secure Measure. Covered scoping, execution,
-     verification and review, with demonstrations and written synthesis.
+   - AI-assisted development workshop | April 2026. Designed and ran a
+     four-hour workshop for Devicie engineers through Secure Measure.
+     Facilitated work on scoping, execution, verification and review,
+     with demonstrations and a written synthesis.
 
-   - Platform engineering & leadership | CBA - Built and operated a
-     private-cloud container platform spanning approximately 1,200
-     physical servers. Progressed from platform engineer to Tower Lead,
-     leading container strategy and up to five DevOps squads.
+   - Platform engineering and leadership | Commonwealth Bank (CBA).
+     Built and operated a private-cloud container platform across
+     approximately 1,200 physical servers. Progressed from Platform
+     Engineer to Tower Lead. Led container strategy and up to five
+     DevOps squads.
 
-   - Windows AppShots | Independent engineering - Built Windows AppShots
+   - Windows AppShots | Independent engineering. Built Windows AppShots
      so coding agents could see and inspect the Windows apps I worked
      on. https://github.com/brianmulder/windows-appshots
 
-   - Agent integration | Independent engineering - Integrated Codex,
-     Claude Code, and OpenClaw with browser and desktop automation
-     across Windows and Linux, using reusable skills, explicit access
-     boundaries, and end-to-end acceptance checks.
+   - Agent integration | Independent engineering. Integrated Codex,
+     Claude Code and OpenClaw with browser and desktop automation on
+     Windows and Linux. Used reusable skills, explicit access boundaries
+     and end-to-end acceptance checks.
 
-   - Distributed systems | Amazon Web Services EC2 - Built and
-     maintained regional capacity systems; developed resource monitoring
-     and automation supporting highly available operations and the
-     launch of new EC2 regions, including work on the Sydney buildout.
+   - Distributed systems | Amazon Web Services EC2. Built and maintained
+     regional capacity systems. Developed resource monitoring and
+     automation to support highly available operations and new EC2
+     regions, including work on the Sydney buildout.
 
-   - Engineering capability | Optus - Led engineering remediation
+   - Engineering capability | Optus. Led engineering remediation
      following the 2022 cyber incident. Embedded platform product
-     practices, controls-as-code, automated evidence, and clearer
-     service ownership.
+     practices, controls-as-code, automated evidence and clearer service
+     ownership.
 
-   - Product engineering | tessur.com - Co-founder; built on-device
+   - Product engineering | Tessur. Co-founded Tessur. Built on-device
      assistant prototypes to help people and their agents check actions
-     against their context and priorities. Rust/Tauri and TypeScript,
-     with Jev classifiers for local screening of risky disclosures and
-     user warnings.
+     against their context and priorities. Used Rust/Tauri, TypeScript
+     and Jev classifiers to screen risky disclosures locally and warn
+     users. https://tessur.com/
 
 
+3. Technical skills
 
-3. Technical skill set
+   Recent project stack: Rust/Tauri, TypeScript, JavaScript, Node.js,
+   Python and Playwright. Jev classifiers, browser extensions, coding
+   agents, Windows UI Automation, CLI/SSH and MCP integrations.
 
-   Recent project stack: Rust / Tauri, TypeScript / JavaScript, Node.js,
-   Python, Playwright; Jev classifiers, browser extensions, coding
-   agents, Windows UI Automation, CLI / SSH, and MCP integrations.
-
-   Engineering background: Java, Scala, C#, Python, Ruby, SQL, Bash;
-   AWS, Kubernetes, Docker, Mesos, OpenStack, Ceph, Vault; CI/CD,
-   DevOps, SRE, Linux, and Windows.
-
+   Engineering background: Java, Scala, C#, Python, Ruby, SQL and Bash.
+   AWS, Kubernetes, Docker, Mesos, OpenStack, Ceph and Vault. CI/CD,
+   DevOps, SRE, Linux and Windows.
 
 
 4. Employment and project detail
 
-
-   4.1. Tessur - Co-founder, Technology and Engineering | Current
+4.1. Tessur
+   Co-founder, Technology and Engineering
+   Current
 
    - Built on-device assistant prototypes to help people and their
      agents check actions against their context and priorities. Used
-     Rust/Tauri, TypeScript and Jev classifiers for local screening of
-     risky disclosures and user warnings. https://tessur.com/
+     Rust/Tauri, TypeScript and Jev classifiers to screen risky
+     disclosures locally and warn users. https://tessur.com/
 
+4.2. Independent AI Consultant
+   Through Secure Measure
+   April 2026
 
-   4.2. Independent AI Consultant - Through Secure Measure | April 2026
+   - Designed and ran a four-hour AI-assisted development workshop for
+     Devicie engineers, under contract through Secure Measure.
 
-   - Designed, ran and facilitated a four-hour AI-assisted development
-     workshop for Devicie engineers, under contract through Secure
-     Measure.
-
-   - Covered scoping, execution, verification and review, supported by
-     demonstrations and a written synthesis of the discussion and
+   - Facilitated work on scoping, execution, verification and review.
+     Used demonstrations and wrote a synthesis of the discussion and
      possible next steps.
 
+4.3. Optus
+   Associate Director
+   Feb 2023 - Nov 2025
 
-   4.3. Optus - Associate Director | Feb 2023 - Nov 2025
-
-   - Technical Product Management: Feb 2023 - Sep 2024. Engineering
-     Capability: Sep 2024 - Nov 2025.
+   Technical Product Management: Feb 2023 - Sep 2024
+   Engineering Capability: Sep 2024 - Nov 2025
 
    - Introduced platform and squad practices centred on sustained
-     product ownership, combining engineering remediation with technical
+     product ownership. Combined engineering remediation with technical
      product management.
 
-   - Developed golden paths to reduce repetitive work, controls-as-code
-     with automated evidence, and service ownership practices using
-     architecture decisions and post-incident reviews.
+   - Developed golden paths to reduce repetitive work. Developed
+     controls-as-code with automated evidence. Established service
+     ownership practices using architecture decisions and post-incident
+     reviews.
 
    - Established talent standards through bar-raiser hiring loops and
      promotion panels aligned with a common career architecture.
 
+4.4. Commonwealth Bank
+   Platform Engineering and Leadership
+   Sep 2016 - Jan 2023
 
-   4.4. Commonwealth Bank - Platform Engineering & Leadership | Sep 2016
-   - Jan 2023
+   Scalable Systems Engineer (Platform Engineer): Sep 2016 - May 2019
+   Engineering Lead: Jun 2019 - Aug 2020
+   Tower Lead, Zero Based Infrastructure: Sep 2020 - Jan 2023
 
-   - Progressed from Scalable Systems Engineer (Platform Engineer), Sep
-     2016-May 2019, to Engineering Lead, Jun 2019-Aug 2020, then Tower
-     Lead, Zero Based Infrastructure, Sep 2020-Jan 2023.
-
-   - Led Zero Based Infrastructure container strategy and delivery,
-     including ZKS, the Kubernetes successor to Mesos, with adoption
+   - Led Zero Based Infrastructure container strategy and delivery. This
+     included ZKS, the Kubernetes successor to Mesos, with adoption
      across multiple business units.
 
-   - Built platform foundations using PowerDNS, Ceph, OpenStack
+   - Built platform foundations with PowerDNS, Ceph, OpenStack
      automation, Calico networking, Scala OS provisioning, Vault,
-     Elastic, and Prometheus. Combined hands-on delivery with service
-     management, engineering standards, and executive stakeholder
-     engagement.
+     Elastic and Prometheus.
 
+   - Combined hands-on delivery with service management, engineering
+     standards and executive stakeholder engagement.
 
-   4.5. Jumo - Platform Engineer | 2015-2016
+4.5. Jumo
+   Platform Engineer
+   2015 - 2016
 
    - Joined a small platform team at a fintech built on Heroku. Helped
      scale to tens of thousands of mobile loans daily, including
      automated customer scoring and fraud detection.
 
-   - Established CI/CD and operational readiness; mentored a growing
+   - Established CI/CD and operational readiness. Mentored a growing
      team across multiple squads.
 
+4.6. Amazon Web Services EC2
+   Software Development Engineer II
+   2013 - 2015
 
-   4.6. Amazon Web Services - Software Development Engineer II |
-   2013-2015
+   - Worked on the EC2 regional capacity backplane and resource
+     monitoring across multiple geographies. Developed automation to
+     bootstrap new regions and maintain existing regions, including work
+     on the Sydney buildout.
 
-   - Worked on the EC2 regional capacity backplane and associated
-     resource monitoring, spanning multiple geographies. Developed
-     automation for new-region bootstrapping and ongoing regional
-     maintenance, including work on the Sydney buildout.
-
-
-   4.7. FirstRand Group, Global Transactional Services - Software
-   Engineer | 2011-2012
+4.7. FirstRand Group, Global Transactional Services
+   Software Engineer
+   2011 - 2012
 
    - Delivered SWIFT service-bureau integrations using Incentage, Scala
-     components, financial facade services, and telephony / CRM
+     components, financial facade services and telephony/CRM
      integrations.
 
-
-   4.8. Dariel Solutions - Software Engineer | 2006-2011
+4.8. Dariel Solutions
+   Software Engineer
+   2006 - 2011
 
    - Delivered trading, risk and logistics software for Global Trader,
-     Tongaat Hulett Starch, and Standard Bank. Applied domain-driven
-     design, code generation, and continuous integration.
-
+     Tongaat Hulett Starch and Standard Bank. Applied domain-driven
+     design, code generation and continuous integration.
 
 
 5. Education
 
    UNISA: BSc Information Technology and Computer Science, Computational
-   Intelligence Stream (awarded 2011); completed while working
-   full-time. CTI: Two software-development / information-systems
-   diplomas (2005-2006).
+   Intelligence Stream. Awarded 2011. Completed while working full-time.
 
+   CTI: Two software-development / information-systems diplomas.
+   2005-2006.
 
 
 6. Contact and links
